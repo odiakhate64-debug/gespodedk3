@@ -1,0 +1,1140 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Dépôt DAKAR 3">
+<meta name="theme-color" content="#0f1117">
+<title>Dépôt DAKAR 3</title>
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="DAKAR 3">
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0f1117;--surface:#181c27;--surface2:#1e2334;--surface3:#252a3d;
+  --accent:#f5a623;--accent2:#4fc3f7;--accent3:#81c784;--accent4:#e57373;
+  --text:#f0f2ff;--text2:#8b92b8;--text3:#4a5070;
+  --fc:#f5a623;--ft:#4fc3f7;--fp:#ce93d8;--fb:#81c784;
+  --border:rgba(255,255,255,0.07);--radius:12px;--radius-lg:18px;
+}
+html,body{height:100%;overflow:hidden}
+body{background:var(--bg);color:var(--text);font-family:'Sora',sans-serif;font-size:14px;display:flex;flex-direction:column}
+.header{background:#1a1f35;border-bottom:1px solid var(--border);padding:0 16px;display:flex;align-items:center;justify-content:space-between;height:56px;flex-shrink:0}
+.logo{display:flex;align-items:center;gap:10px}
+.logo-icon{width:32px;height:32px;background:linear-gradient(135deg,var(--accent),#e8960f);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px}
+.logo-text{font-size:15px;font-weight:700}
+.logo-sub{font-size:9px;color:var(--text2);letter-spacing:1px;text-transform:uppercase}
+.header-date{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text2);background:var(--surface2);padding:5px 10px;border-radius:6px;border:1px solid var(--border)}
+.scroll-area{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch}
+.scroll-area::-webkit-scrollbar{width:3px}
+.scroll-area::-webkit-scrollbar-thumb{background:var(--surface3);border-radius:3px}
+.main{padding:14px;max-width:1000px;margin:0 auto;padding-bottom:80px}
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;background:#181c27;border-top:1px solid var(--border);display:flex;z-index:100;padding-bottom:env(safe-area-inset-bottom)}
+.bnav-btn{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:6px 2px;border:none;background:transparent;color:var(--text2);cursor:pointer;font-family:'Sora',sans-serif;font-size:8px;font-weight:500;gap:2px;transition:all .2s;min-height:54px;-webkit-tap-highlight-color:transparent}
+.bnav-btn .ico{font-size:18px;line-height:1}
+.bnav-btn.active{color:var(--accent)}
+.page{display:none}.page.active{display:block}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:14px;margin-bottom:10px}
+.card-title{font-size:10px;color:var(--text2);text-transform:uppercase;letter-spacing:1.2px;margin-bottom:12px;font-weight:600}
+.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:12px}
+.stat-label{font-size:10px;color:var(--text2);letter-spacing:.6px;text-transform:uppercase;margin-bottom:3px}
+.stat-val{font-size:16px;font-weight:700;font-family:'JetBrains Mono',monospace}
+.fc-color .stat-val{color:var(--fc)}.ft-color .stat-val{color:var(--ft)}.fp-color .stat-val{color:var(--fp)}.fb-color .stat-val{color:var(--fb)}
+.fc-badge{background:rgba(245,166,35,0.15);color:var(--fc)}.ft-badge{background:rgba(79,195,247,0.15);color:var(--ft)}
+.fp-badge{background:rgba(206,147,216,0.15);color:var(--fp)}.fb-badge{background:rgba(129,199,132,0.15);color:var(--fb)}
+.progress-bar{height:3px;background:var(--surface3);border-radius:4px;overflow:hidden;margin-top:6px}
+.progress-fill{height:100%;border-radius:4px;transition:width .5s}
+.form-group{margin-bottom:12px}
+.form-label{font-size:10px;color:var(--text2);margin-bottom:5px;display:block;letter-spacing:.5px;text-transform:uppercase}
+.form-input,.form-select{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:10px 12px;color:var(--text);font-family:'Sora',sans-serif;font-size:14px;outline:none;transition:border .2s;-webkit-appearance:none}
+.form-input:focus,.form-select:focus{border-color:var(--accent)}
+.form-select option{background:#1e2334}
+.btn{padding:9px 16px;border-radius:8px;border:none;cursor:pointer;font-family:'Sora',sans-serif;font-size:12px;font-weight:600;transition:all .2s;-webkit-tap-highlight-color:transparent}
+.btn-primary{background:var(--accent);color:#000}.btn-primary:active{transform:scale(.97)}
+.btn-danger{background:rgba(229,115,115,0.15);color:var(--accent4);border:1px solid rgba(229,115,115,0.2)}
+.btn-success{background:rgba(129,199,132,0.15);color:var(--accent3);border:1px solid rgba(129,199,132,0.2)}
+.btn-info{background:rgba(79,195,247,0.15);color:var(--accent2);border:1px solid rgba(79,195,247,0.2)}
+.btn-sm{padding:5px 10px;font-size:10px}
+.badge{font-size:9px;padding:3px 8px;border-radius:20px;font-weight:600}
+.badge-in{background:rgba(129,199,132,0.15);color:var(--accent3)}.badge-out{background:rgba(229,115,115,0.15);color:var(--accent4)}
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:200;align-items:flex-end;justify-content:center}
+.modal-overlay.open{display:flex}
+.modal{background:var(--surface);border-top:1px solid var(--border);border-radius:20px 20px 0 0;padding:18px;width:100%;max-height:92vh;overflow-y:auto;animation:slideUp2 .25s ease;padding-bottom:calc(20px + env(safe-area-inset-bottom))}
+@keyframes slideUp2{from{transform:translateY(100%)}to{transform:translateY(0)}}
+.modal-handle{width:40px;height:4px;background:var(--surface3);border-radius:2px;margin:0 auto 14px}
+.modal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.modal-title{font-size:15px;font-weight:700}
+.modal-close{background:var(--surface2);border:none;color:var(--text2);width:28px;height:28px;border-radius:6px;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center}
+.alert{padding:9px 12px;border-radius:8px;font-size:11px;margin-bottom:8px}
+.alert-warn{background:rgba(229,115,115,0.12);border-left:3px solid var(--accent4);color:var(--accent4)}
+.alert-ok{background:rgba(129,199,132,0.12);border-left:3px solid var(--accent3);color:var(--accent3)}
+.section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.section-title{font-size:14px;font-weight:700}
+.divider{height:1px;background:var(--border);margin:12px 0}
+.empty{text-align:center;padding:24px 16px;color:var(--text3);font-size:12px}
+.table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+table{width:100%;border-collapse:collapse;min-width:340px}
+th{padding:7px 9px;text-align:left;font-size:9px;color:var(--text2);text-transform:uppercase;letter-spacing:.8px;border-bottom:1px solid var(--border)}
+td{padding:8px 9px;font-size:11px;border-bottom:1px solid rgba(255,255,255,0.03);vertical-align:middle}
+tr:last-child td{border-bottom:none}
+.filter-scroll{display:flex;gap:6px;overflow-x:auto;margin-bottom:10px;-webkit-overflow-scrolling:touch;padding-bottom:2px}
+.filter-scroll::-webkit-scrollbar{display:none}
+.chip{padding:5px 12px;border-radius:20px;font-size:10px;font-weight:500;cursor:pointer;border:1px solid var(--border);background:transparent;color:var(--text2);white-space:nowrap;-webkit-tap-highlight-color:transparent;transition:all .2s}
+.chip.active{background:var(--accent);color:#000;border-color:var(--accent)}
+.toast{position:fixed;bottom:74px;left:50%;transform:translateX(-50%);background:var(--surface3);border:1px solid var(--border);border-left:3px solid var(--accent3);border-radius:10px;padding:9px 16px;font-size:12px;z-index:300;animation:toastIn .3s ease;white-space:nowrap}
+@keyframes toastIn{from{transform:translateX(-50%) translateY(10px);opacity:0}to{transform:translateX(-50%) translateY(0);opacity:1}}
+.dep-row{display:flex;align-items:center;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border)}
+.dep-row:last-child{border-bottom:none}
+.farine-block{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:12px;margin-bottom:10px}
+.farine-num{font-family:'JetBrains Mono',monospace;font-size:22px;font-weight:700;margin-bottom:2px}
+.farine-stats{display:flex;gap:12px;font-size:10px;color:var(--text2)}
+/* tabs */
+.tabs{display:flex;gap:4px;background:var(--surface2);border-radius:10px;padding:4px;margin-bottom:14px}
+.tab-btn{flex:1;padding:7px 6px;border:none;border-radius:7px;background:transparent;color:var(--text2);font-family:'Sora',sans-serif;font-size:11px;font-weight:500;cursor:pointer;transition:all .2s;-webkit-tap-highlight-color:transparent}
+.tab-btn.active{background:var(--surface);color:var(--text);box-shadow:0 1px 4px rgba(0,0,0,.3)}
+/* virement card */
+.virement-card{background:linear-gradient(135deg,rgba(79,195,247,0.08),rgba(79,195,247,0.02));border:1px solid rgba(79,195,247,0.2);border-radius:var(--radius-lg);padding:14px;margin-bottom:10px}
+/* rapport print */
+#rapport-modal .modal{max-height:95vh}
+.rapport-section{margin-bottom:16px}
+.rapport-section-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--text2);margin-bottom:8px;padding-bottom:4px;border-bottom:1px solid var(--border)}
+.rapport-row{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid rgba(255,255,255,0.03);font-size:12px}
+.rapport-total{display:flex;justify-content:space-between;align-items:center;padding:8px 0;font-weight:700;font-size:13px;border-top:1px solid var(--border);margin-top:4px;color:var(--accent)}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="logo">
+    <div class="logo-icon">🌾</div>
+    <div>
+      <div class="logo-text">Dépôt DAKAR 3</div>
+      <div class="logo-sub">Gestion Stock Farine</div>
+    </div>
+  </div>
+  <div class="header-date" id="headerDate"></div>
+</div>
+
+<div class="scroll-area">
+<div class="main">
+
+<!-- ===== DASHBOARD ===== -->
+<div class="page active" id="page-dashboard">
+  <div class="grid2" style="margin-bottom:10px">
+    <div class="stat-card fc-color"><div class="stat-label">First Choice</div><div class="stat-val" id="d-fc">0</div><div style="font-size:10px;color:var(--text2)">sacs</div><div class="progress-bar"><div class="progress-fill" id="p-fc" style="background:var(--fc);width:0%"></div></div></div>
+    <div class="stat-card ft-color"><div class="stat-label">Teranga</div><div class="stat-val" id="d-ft">0</div><div style="font-size:10px;color:var(--text2)">sacs</div><div class="progress-bar"><div class="progress-fill" id="p-ft" style="background:var(--ft);width:0%"></div></div></div>
+    <div class="stat-card fp-color"><div class="stat-label">Pâtissière</div><div class="stat-val" id="d-fp">0</div><div style="font-size:10px;color:var(--text2)">sacs</div><div class="progress-bar"><div class="progress-fill" id="p-fp" style="background:var(--fp);width:0%"></div></div></div>
+    <div class="stat-card fb-color"><div class="stat-label">Beignet</div><div class="stat-val" id="d-fb">0</div><div style="font-size:10px;color:var(--text2)">sacs</div><div class="progress-bar"><div class="progress-fill" id="p-fb" style="background:var(--fb);width:0%"></div></div></div>
+  </div>
+  <div class="card"><div class="card-title">Alertes stock</div><div id="alertes-stock"></div></div>
+  <div class="card">
+    <div class="card-title">Solde dépenses ce mois</div>
+    <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px">
+      <div><div style="font-size:10px;color:var(--accent2)">VIREMENT REÇU</div><div style="font-size:18px;font-weight:700;font-family:'JetBrains Mono',monospace;color:var(--accent2)" id="d-virement-mois">0 F</div></div>
+      <div style="text-align:right"><div style="font-size:10px;color:var(--accent4)">DÉPENSES</div><div style="font-size:18px;font-weight:700;font-family:'JetBrains Mono',monospace;color:var(--accent4)" id="d-dep-mois">0 F</div></div>
+    </div>
+    <div class="divider"></div>
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <span style="font-size:11px;color:var(--text2)">Solde restant</span>
+      <span style="font-size:16px;font-weight:700;font-family:'JetBrains Mono',monospace" id="d-solde-mois">0 F</span>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title">Derniers mouvements</div>
+    <div class="table-wrap"><table><thead><tr><th>Date</th><th>Type</th><th>Farine</th><th>Qté</th></tr></thead><tbody id="recent-moves"><tr><td colspan="4" class="empty">Aucun mouvement</td></tr></tbody></table></div>
+  </div>
+</div>
+
+<!-- ===== STOCK ===== -->
+<div class="page" id="page-stock">
+  <div class="section-header"><div class="section-title">État du Stock</div></div>
+  <div id="stock-blocks"></div>
+  <div class="card">
+    <div class="card-title">Seuils d'alerte minimum</div>
+    <div id="seuil-blocks"></div>
+  </div>
+</div>
+
+<!-- ===== APPRO ===== -->
+<div class="page" id="page-appro">
+  <div class="section-header">
+    <div class="section-title">Approvisionnement</div>
+    <button class="btn btn-primary btn-sm" onclick="openModal('modal-appro')">+ Nouveau</button>
+  </div>
+  <div class="filter-scroll">
+    <button class="chip active" onclick="filterT('appro','all',this)">Tous</button>
+    <button class="chip" onclick="filterT('appro','FIRST CHOICE',this)">First Choice</button>
+    <button class="chip" onclick="filterT('appro','TERANGA',this)">Teranga</button>
+    <button class="chip" onclick="filterT('appro','PATISSIERE',this)">Pâtissière</button>
+    <button class="chip" onclick="filterT('appro','BEIGNET',this)">Beignet</button>
+  </div>
+  <div class="card">
+    <div class="table-wrap"><table><thead><tr><th>Date</th><th>Farine</th><th>Sacs</th><th>Prix/sac</th><th>Total</th><th>Fourn.</th></tr></thead><tbody id="appro-table"></tbody></table></div>
+  </div>
+</div>
+
+<!-- ===== SORTIES ===== -->
+<div class="page" id="page-sorties">
+  <div class="section-header">
+    <div class="section-title">Sorties</div>
+    <button class="btn btn-primary btn-sm" onclick="openModal('modal-sortie')">+ Nouvelle</button>
+  </div>
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchSortieTab('liste',this)">📋 Liste</button>
+    <button class="tab-btn" onclick="switchSortieTab('client',this)">👤 Par client</button>
+    <button class="tab-btn" onclick="switchSortieTab('farine',this)">🌾 Par farine</button>
+  </div>
+  <!-- liste -->
+  <div id="sortie-tab-liste">
+    <div class="filter-scroll">
+      <button class="chip active" onclick="filterT('sortie','all',this)">Tous</button>
+      <button class="chip" onclick="filterT('sortie','FIRST CHOICE',this)">First Choice</button>
+      <button class="chip" onclick="filterT('sortie','TERANGA',this)">Teranga</button>
+      <button class="chip" onclick="filterT('sortie','PATISSIERE',this)">Pâtissière</button>
+      <button class="chip" onclick="filterT('sortie','BEIGNET',this)">Beignet</button>
+    </div>
+    <div class="card"><div class="table-wrap"><table><thead><tr><th>Date</th><th>Farine</th><th>Sacs</th><th>Client</th><th>Note</th></tr></thead><tbody id="sortie-table"></tbody></table></div></div>
+  </div>
+  <!-- par client -->
+  <div id="sortie-tab-client" style="display:none">
+    <div style="display:flex;gap:8px;margin-bottom:10px">
+      <input type="month" id="client-month" class="form-input" style="font-size:12px;padding:7px 10px">
+    </div>
+    <div id="client-blocks"></div>
+  </div>
+  <!-- par farine -->
+  <div id="sortie-tab-farine" style="display:none">
+    <div style="display:flex;gap:8px;margin-bottom:10px">
+      <input type="month" id="farine-month" class="form-input" style="font-size:12px;padding:7px 10px">
+    </div>
+    <div id="farine-blocks"></div>
+  </div>
+</div>
+
+<!-- ===== DEPENSES ===== -->
+<div class="page" id="page-depenses">
+  <div class="section-header"><div class="section-title">Dépenses</div></div>
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchDepTab('apercu',this)">📊 Aperçu</button>
+    <button class="tab-btn" onclick="switchDepTab('virement',this)">💳 Virements</button>
+    <button class="tab-btn" onclick="switchDepTab('charges',this)">📝 Charges</button>
+    <button class="tab-btn" onclick="switchDepTab('mensuel',this)">📅 Mensuel</button>
+  </div>
+
+  <!-- APERCU -->
+  <div id="dep-tab-apercu">
+    <div style="display:flex;gap:8px;margin-bottom:10px">
+      <input type="month" id="dep-month-filter" class="form-input" style="font-size:12px;padding:7px 10px" onchange="refreshDepApercu()">
+    </div>
+    <div class="virement-card">
+      <div style="font-size:10px;color:var(--accent2);margin-bottom:4px;text-transform:uppercase;letter-spacing:.8px">Virement reçu ce mois</div>
+      <div style="font-size:24px;font-weight:700;font-family:'JetBrains Mono',monospace;color:var(--accent2)" id="ap-virement">0 F CFA</div>
+    </div>
+    <div class="grid2" style="margin-bottom:10px">
+      <div class="stat-card"><div class="stat-label">Total dépenses</div><div class="stat-val" style="color:var(--accent4)" id="ap-total">0 F</div></div>
+      <div class="stat-card" style="border-color:rgba(245,166,35,0.3)"><div class="stat-label">Solde restant</div><div class="stat-val" id="ap-solde">0 F</div></div>
+    </div>
+    <div class="card" id="ap-cat-breakdown"></div>
+  </div>
+
+  <!-- VIREMENTS -->
+  <div id="dep-tab-virement" style="display:none">
+    <div class="section-header">
+      <div style="font-size:12px;color:var(--text2)">Virements d'approvisionnement mensuels</div>
+      <button class="btn btn-info btn-sm" onclick="openModal('modal-virement')">+ Ajouter</button>
+    </div>
+    <div class="card"><div class="table-wrap"><table><thead><tr><th>Date</th><th>Montant (F CFA)</th><th>Note</th><th></th></tr></thead><tbody id="virement-table"></tbody></table></div></div>
+  </div>
+
+  <!-- CHARGES -->
+  <div id="dep-tab-charges" style="display:none">
+    <div class="section-header">
+      <div style="font-size:12px;color:var(--text2)">Toutes les dépenses</div>
+      <button class="btn btn-primary btn-sm" onclick="openModal('modal-depense')">+ Ajouter</button>
+    </div>
+    <div class="filter-scroll">
+      <button class="chip active" onclick="filterDep('all',this)">Toutes</button>
+      <button class="chip" onclick="filterDep('CHARGEMENT',this)">Chargement</button>
+      <button class="chip" onclick="filterDep('DECHARGEMENT',this)">Déchargement</button>
+      <button class="chip" onclick="filterDep('TRANSPORT',this)">Transport</button>
+      <button class="chip" onclick="filterDep('MAIRIE',this)">Mairie</button>
+      <button class="chip" onclick="filterDep('WOYOFAL',this)">Woyofal</button>
+      <button class="chip" onclick="filterDep('GARDIENNAGE',this)">Gardiennage</button>
+      <button class="chip" onclick="filterDep('NETTOYAGE',this)">Nettoyage</button>
+      <button class="chip" onclick="filterDep('REPAS',this)">Repas</button>
+      <button class="chip" onclick="filterDep('ELECTRICITE',this)">Électricité</button>
+      <button class="chip" onclick="filterDep('AUTRE',this)">Autre</button>
+    </div>
+    <div class="card"><div class="table-wrap"><table><thead><tr><th>Date</th><th>Catégorie</th><th>Montant</th><th>Description</th><th></th></tr></thead><tbody id="depense-table"></tbody></table></div></div>
+  </div>
+
+  <!-- MENSUEL -->
+  <div id="dep-tab-mensuel" style="display:none">
+    <div style="display:flex;gap:8px;margin-bottom:10px;align-items:center">
+      <input type="month" id="dep-mensuel-month" class="form-input" style="font-size:12px;padding:7px 10px;flex:1" onchange="refreshMensuel()">
+      <button class="btn btn-success btn-sm" onclick="genRapportDepenses()">📄 Rapport</button>
+    </div>
+    <div id="mensuel-blocks"></div>
+  </div>
+</div>
+
+<!-- ===== HISTORIQUE ===== -->
+<div class="page" id="page-historique">
+  <div class="section-header">
+    <div class="section-title">Historique</div>
+    <button class="btn btn-success btn-sm" onclick="exportCSV()">⬇ CSV</button>
+  </div>
+  <div style="margin-bottom:10px;display:flex;gap:8px;align-items:center">
+    <input type="month" id="hist-month" class="form-input" style="font-size:12px;padding:7px 10px;flex:1">
+    <button class="btn btn-info btn-sm" onclick="genRapportComplet()">📄 Rapport</button>
+  </div>
+  <div class="card"><div class="table-wrap"><table><thead><tr><th>Date</th><th>Type</th><th>Farine</th><th>Qté</th><th>Montant</th></tr></thead><tbody id="hist-table"></tbody></table></div></div>
+</div>
+
+</div>
+</div>
+
+<!-- BOTTOM NAV -->
+<div class="bottom-nav">
+  <button class="bnav-btn active" onclick="showPage('dashboard',this)"><span class="ico">📊</span>Accueil</button>
+  <button class="bnav-btn" onclick="showPage('stock',this)"><span class="ico">🗃️</span>Stock</button>
+  <button class="bnav-btn" onclick="showPage('appro',this)"><span class="ico">📦</span>Entrées</button>
+  <button class="bnav-btn" onclick="showPage('sorties',this)"><span class="ico">📤</span>Sorties</button>
+  <button class="bnav-btn" onclick="showPage('depenses',this)"><span class="ico">💸</span>Dépenses</button>
+  <button class="bnav-btn" onclick="showPage('clients',this)"><span class="ico">👤</span>Clients</button>
+  <button class="bnav-btn" onclick="showPage('historique',this)"><span class="ico">📋</span>Historique</button>
+</div>
+
+<!-- ===== MODALS ===== -->
+<!-- APPRO -->
+<div class="modal-overlay" id="modal-appro">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-header"><div class="modal-title">📦 Approvisionnement</div><button class="modal-close" onclick="closeModal('modal-appro')">✕</button></div>
+    <div class="form-group"><label class="form-label">Type de farine</label>
+      <select class="form-select" id="a-farine"><option value="FIRST CHOICE">FARINE FIRST CHOICE</option><option value="TERANGA">FARINE TERANGA</option><option value="PATISSIERE">FARINE PÂTISSIÈRE</option><option value="BEIGNET">FARINE BEIGNET</option></select></div>
+    <div class="grid2">
+      <div class="form-group"><label class="form-label">Nombre de sacs</label><input type="number" class="form-input" id="a-qty" min="1" placeholder="50" inputmode="numeric"></div>
+      <div class="form-group"><label class="form-label">Prix/sac (F CFA)</label><input type="number" class="form-input" id="a-prix" min="0" placeholder="17000" inputmode="numeric"></div>
+    </div>
+    <div class="form-group"><label class="form-label">Fournisseur</label><input type="text" class="form-input" id="a-four" placeholder="Nom du fournisseur"></div>
+    <div class="form-group"><label class="form-label">Date</label><input type="date" class="form-input" id="a-date"></div>
+    <div class="form-group"><label class="form-label">Note (optionnel)</label><input type="text" class="form-input" id="a-note" placeholder="Remarque..."></div>
+    <button class="btn btn-primary" style="width:100%;margin-top:4px" onclick="saveAppro()">✓ Enregistrer</button>
+  </div>
+</div>
+
+<!-- SORTIE -->
+<div class="modal-overlay" id="modal-sortie">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-header"><div class="modal-title">📤 Sortie de stock</div><button class="modal-close" onclick="closeModal('modal-sortie')">✕</button></div>
+    <div class="form-group"><label class="form-label">Type de farine</label>
+      <select class="form-select" id="s-farine" onchange="updateStockInfo()"><option value="FIRST CHOICE">FARINE FIRST CHOICE</option><option value="TERANGA">FARINE TERANGA</option><option value="PATISSIERE">FARINE PÂTISSIÈRE</option><option value="BEIGNET">FARINE BEIGNET</option></select></div>
+    <div id="s-stock-info" style="font-size:11px;color:var(--accent);margin-bottom:10px;padding:6px 10px;background:rgba(245,166,35,0.08);border-radius:6px"></div>
+    <div class="grid2">
+      <div class="form-group"><label class="form-label">Nombre de sacs</label><input type="number" class="form-input" id="s-qty" min="1" placeholder="10" inputmode="numeric"></div>
+      <div class="form-group"><label class="form-label">Date</label><input type="date" class="form-input" id="s-date"></div>
+    </div>
+    <div class="form-group"><label class="form-label">Client / Destination</label><input type="text" class="form-input" id="s-client" placeholder="Nom client"></div>
+    <div class="form-group"><label class="form-label">Note (optionnel)</label><input type="text" class="form-input" id="s-note" placeholder="Remarque..."></div>
+    <button class="btn btn-primary" style="width:100%;margin-top:4px" onclick="saveSortie()">✓ Enregistrer</button>
+  </div>
+</div>
+
+<!-- DEPENSE -->
+<div class="modal-overlay" id="modal-depense">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-header"><div class="modal-title">💸 Nouvelle dépense</div><button class="modal-close" onclick="closeModal('modal-depense')">✕</button></div>
+    <div class="form-group"><label class="form-label">Catégorie</label>
+      <select class="form-select" id="dep-cat">
+        <option value="CHARGEMENT">Chargement</option>
+        <option value="DECHARGEMENT">Déchargement</option>
+        <option value="TRANSPORT">Transport</option>
+        <option value="MAIRIE">Mairie</option>
+        <option value="WOYOFAL">Woyofal</option>
+        <option value="GARDIENNAGE">Gardiennage</option>
+        <option value="NETTOYAGE">Nettoyage</option>
+        <option value="REPAS">Repas ADV/Commercial</option>
+        <option value="ELECTRICITE">Électricité</option>
+        <option value="AUTRE">Autre charge</option>
+      </select></div>
+    <div class="grid2">
+      <div class="form-group"><label class="form-label">Montant (F CFA)</label><input type="number" class="form-input" id="dep-montant" min="0" placeholder="5000" inputmode="numeric"></div>
+      <div class="form-group"><label class="form-label">Date</label><input type="date" class="form-input" id="dep-date"></div>
+    </div>
+    <div class="form-group"><label class="form-label">Description</label><input type="text" class="form-input" id="dep-desc" placeholder="Détail..."></div>
+    <button class="btn btn-primary" style="width:100%;margin-top:4px" onclick="saveDepense()">✓ Enregistrer</button>
+  </div>
+</div>
+
+<!-- VIREMENT -->
+<div class="modal-overlay" id="modal-virement">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-header"><div class="modal-title">💳 Virement reçu</div><button class="modal-close" onclick="closeModal('modal-virement')">✕</button></div>
+    <div class="form-group"><label class="form-label">Montant virement (F CFA)</label><input type="number" class="form-input" id="vir-montant" min="0" placeholder="500000" inputmode="numeric"></div>
+    <div class="form-group"><label class="form-label">Date de réception</label><input type="date" class="form-input" id="vir-date"></div>
+    <div class="form-group"><label class="form-label">Note (optionnel)</label><input type="text" class="form-input" id="vir-note" placeholder="ex: Virement mai 2025..."></div>
+    <button class="btn btn-primary" style="width:100%;margin-top:4px" onclick="saveVirement()">✓ Enregistrer</button>
+  </div>
+</div>
+
+<!-- RAPPORT MODAL -->
+<div class="modal-overlay" id="rapport-modal">
+  <div class="modal" id="rapport-content-wrap">
+    <div class="modal-handle"></div>
+    <div class="modal-header"><div class="modal-title" id="rapport-title">Rapport</div><button class="modal-close" onclick="closeModal('rapport-modal')">✕</button></div>
+    <div id="rapport-body"></div>
+    <div style="display:flex;gap:8px;margin-top:14px">
+      <button class="btn btn-success" style="flex:1" onclick="printRapport()">🖨️ Imprimer / PDF</button>
+      <button class="btn btn-info" style="flex:1" onclick="exportRapportCSV()">⬇ CSV</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const FARINES=[
+  {key:'FIRST CHOICE',label:'FARINE FIRST CHOICE',color:'var(--fc)',badge:'fc-badge'},
+  {key:'TERANGA',label:'FARINE TERANGA',color:'var(--ft)',badge:'ft-badge'},
+  {key:'PATISSIERE',label:'FARINE PÂTISSIÈRE',color:'var(--fp)',badge:'fp-badge'},
+  {key:'BEIGNET',label:'FARINE BEIGNET',color:'var(--fb)',badge:'fb-badge'},
+];
+const ALL_CATS=['CHARGEMENT','DECHARGEMENT','TRANSPORT','MAIRIE','WOYOFAL','GARDIENNAGE','NETTOYAGE','REPAS','ELECTRICITE','AUTRE'];
+const CAT_ICONS={CHARGEMENT:'🏗️',DECHARGEMENT:'📥',TRANSPORT:'🚛',MAIRIE:'🏛️',WOYOFAL:'💡',GARDIENNAGE:'🔐',NETTOYAGE:'🧹',REPAS:'🍽️',ELECTRICITE:'⚡',AUTRE:'📌'};
+const CAT_COLORS={CHARGEMENT:'var(--accent2)',DECHARGEMENT:'var(--fp)',TRANSPORT:'var(--fc)',MAIRIE:'#a5d6a7',WOYOFAL:'#ffcc80',GARDIENNAGE:'#80cbc4',NETTOYAGE:'#b39ddb',REPAS:'#f48fb1',ELECTRICITE:'#ffe082',AUTRE:'var(--fb)'};
+
+let data=JSON.parse(localStorage.getItem('depot_farine_v5')||JSON.stringify({
+  appros:[],sorties:[],depenses:[],virements:[],
+  seuils:{'FIRST CHOICE':20,'TERANGA':20,'PATISSIERE':20,'BEIGNET':20},
+  clients:[],versements_clients:[]
+}));
+if(!data.virements) data.virements=[];
+if(!data.clients||data.clients.length===0){data.clients=[{id:"c_1000",nom:"BAY BABOU",tel:"",soldeInitial:3309500,limiteCredit:4700000,note:"",dateCreation:"2025-03-15"},{id:"c_1001",nom:"ABDOU AHAD DIBA",tel:"",soldeInitial:1518300,limiteCredit:1520000,note:"",dateCreation:"2025-03-15"},{id:"c_1002",nom:"OMAR GAYE",tel:"",soldeInitial:2336400,limiteCredit:2355000,note:"",dateCreation:"2025-03-15"},{id:"c_1003",nom:"DIAKHOUMPA",tel:"",soldeInitial:0,limiteCredit:0,note:"",dateCreation:"2025-03-15"},{id:"c_1004",nom:"KHADIM CISSE",tel:"",soldeInitial:0,limiteCredit:760000,note:"",dateCreation:"2025-03-15"},{id:"c_1005",nom:"BABACAR DIENE",tel:"",soldeInitial:9120000,limiteCredit:9120000,note:"",dateCreation:"2025-03-15"},{id:"c_1006",nom:"DAOUDA DIOP",tel:"",soldeInitial:5837000,limiteCredit:15000000,note:"",dateCreation:"2025-03-15"},{id:"c_1007",nom:"ELIMANE FAYE",tel:"",soldeInitial:3800000,limiteCredit:3800000,note:"",dateCreation:"2025-03-15"},{id:"c_1008",nom:"FATOU T DIOP",tel:"",soldeInitial:0,limiteCredit:1520000,note:"",dateCreation:"2025-03-15"},{id:"c_1009",nom:"IBRAHIMA CISSE",tel:"",soldeInitial:15000000,limiteCredit:15000000,note:"",dateCreation:"2025-03-15"},{id:"c_1010",nom:"IBRAHIMA NDIAYE",tel:"",soldeInitial:9138000,limiteCredit:10000000,note:"",dateCreation:"2025-03-15"},{id:"c_1011",nom:"MAMADOU NGOM",tel:"",soldeInitial:9907500,limiteCredit:10000000,note:"",dateCreation:"2025-03-15"},{id:"c_1012",nom:"SERIGNE DIAKHATE",tel:"",soldeInitial:3040000,limiteCredit:3040000,note:"",dateCreation:"2025-03-15"},{id:"c_1013",nom:"AMADOU BA DRAME",tel:"",soldeInitial:0,limiteCredit:1520000,note:"",dateCreation:"2025-03-15"},{id:"c_1014",nom:"BARA DIOP",tel:"",soldeInitial:-1200,limiteCredit:0,note:"",dateCreation:"2025-03-15"},{id:"c_1015",nom:"BOULANGERIE YOUSSEF",tel:"",soldeInitial:0,limiteCredit:0,note:"",dateCreation:"2025-03-15"},{id:"c_1016",nom:"ALPHOUSSEYNI MANGA",tel:"",soldeInitial:0,limiteCredit:0,note:"",dateCreation:"2025-03-15"},{id:"c_1017",nom:"FALLOU BA",tel:"",soldeInitial:0,limiteCredit:0,note:"",dateCreation:"2025-03-15"},{id:"c_1018",nom:"OUSMANE GUISSE",tel:"",soldeInitial:0,limiteCredit:0,note:"",dateCreation:"2025-03-15"},{id:"c_1019",nom:"MAMADOU DIARRA",tel:"",soldeInitial:0,limiteCredit:0,note:"",dateCreation:"2025-03-15"},{id:"c_1020",nom:"KHADIJATOU DIALLO",tel:"",soldeInitial:0,limiteCredit:0,note:"",dateCreation:"2025-03-15"},{id:"c_1021",nom:"MOUCTAR LY",tel:"",soldeInitial:0,limiteCredit:0,note:"",dateCreation:"2025-03-15"},{id:"c_1022",nom:"MAOULOUD MAIGA",tel:"",soldeInitial:0,limiteCredit:0,note:"",dateCreation:"2025-03-15"}];}
+if(!data.versements_clients) data.versements_clients=[];
+function save(){localStorage.setItem('depot_farine_v5',JSON.stringify(data))}
+
+function getStock(k){
+  return data.appros.filter(a=>a.farine===k).reduce((s,a)=>s+a.qty,0)
+       - data.sorties.filter(a=>a.farine===k).reduce((s,a)=>s+a.qty,0);
+}
+function today(){return new Date().toISOString().split('T')[0]}
+function curMonth(){const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')}
+function fmtD(d){if(!d)return'—';const[y,m,j]=d.split('-');return j+'/'+m+'/'+y}
+function fmtM(v){return Number(v).toLocaleString('fr-FR')+' F'}
+
+// ===== PAGE NAV =====
+function showPage(id,btn){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.bnav-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  if(btn)btn.classList.add('active');
+  document.querySelector('.scroll-area').scrollTop=0;
+  refresh();
+}
+
+// ===== TAB SWITCHES =====
+function switchDepTab(tab,btn){
+  ['apercu','virement','charges','mensuel'].forEach(t=>document.getElementById('dep-tab-'+t).style.display='none');
+  document.getElementById('dep-tab-'+tab).style.display='block';
+  document.querySelectorAll('#page-depenses .tab-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  if(tab==='mensuel')refreshMensuel();
+  if(tab==='apercu')refreshDepApercu();
+  if(tab==='virement')renderVirementTable();
+  if(tab==='charges')renderDepTable('all');
+}
+function switchSortieTab(tab,btn){
+  ['liste','client','farine'].forEach(t=>document.getElementById('sortie-tab-'+t).style.display='none');
+  document.getElementById('sortie-tab-'+tab).style.display='block';
+  document.querySelectorAll('#page-sorties .tab-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  if(tab==='client')refreshClientBlocks();
+  if(tab==='farine')refreshFarineBlocks();
+}
+
+// ===== REFRESH =====
+function refresh(){
+  const stocks={};let mx=1;
+  FARINES.forEach(f=>{stocks[f.key]=getStock(f.key);if(stocks[f.key]>mx)mx=stocks[f.key]});
+  ['FIRST CHOICE','TERANGA','PATISSIERE','BEIGNET'].forEach((k,i)=>{
+    const ids=['d-fc','d-ft','d-fp','d-fb'];const pids=['p-fc','p-ft','p-fp','p-fb'];
+    const el=document.getElementById(ids[i]);const pel=document.getElementById(pids[i]);
+    if(el){el.textContent=stocks[k];pel.style.width=Math.min(100,stocks[k]/mx*100)+'%'}
+  });
+
+  // alertes
+  const ael=document.getElementById('alertes-stock');
+  if(ael){let h='';FARINES.forEach(f=>{if(stocks[f.key]<=data.seuils[f.key])h+=`<div class="alert alert-warn">⚠️ ${f.label} : ${stocks[f.key]} sacs (min ${data.seuils[f.key]})</div>`;});ael.innerHTML=h||'<div class="alert alert-ok">✓ Tous les stocks sont suffisants</div>';}
+
+  // dashboard solde
+  const cm=curMonth();
+  const virMois=data.virements.filter(v=>v.date.startsWith(cm)).reduce((s,v)=>s+v.montant,0);
+  const depMois=data.depenses.filter(d=>d.date.startsWith(cm)).reduce((s,d)=>s+d.montant,0);
+  if(document.getElementById('d-virement-mois'))document.getElementById('d-virement-mois').textContent=fmtM(virMois);
+  if(document.getElementById('d-dep-mois'))document.getElementById('d-dep-mois').textContent=fmtM(depMois);
+  if(document.getElementById('d-solde-mois')){const s=virMois-depMois;document.getElementById('d-solde-mois').textContent=fmtM(s);document.getElementById('d-solde-mois').style.color=s>=0?'var(--accent3)':'var(--accent4)';}
+
+  // recent moves
+  const rEl=document.getElementById('recent-moves');
+  if(rEl){
+    const moves=[...data.appros.map(a=>({date:a.date,type:'Entrée',farine:a.farine,qty:'+'+a.qty})),...data.sorties.map(s=>({date:s.date,type:'Sortie',farine:s.farine,qty:'-'+s.qty}))].sort((a,b)=>b.date.localeCompare(a.date)).slice(0,6);
+    rEl.innerHTML=moves.length?moves.map(m=>`<tr><td style="font-size:10px;font-family:'JetBrains Mono',monospace">${fmtD(m.date)}</td><td><span class="badge ${m.type==='Entrée'?'badge-in':'badge-out'}">${m.type}</span></td><td style="font-size:10px">${m.farine}</td><td style="font-family:'JetBrains Mono',monospace;color:${m.type==='Entrée'?'var(--accent3)':'var(--accent4)'}">${m.qty}</td></tr>`).join(''):'<tr><td colspan="4" class="empty">Aucun mouvement</td></tr>';
+  }
+
+  // stock page
+  const sb=document.getElementById('stock-blocks');
+  if(sb){sb.innerHTML=FARINES.map(f=>{const s=stocks[f.key];const e=data.appros.filter(a=>a.farine===f.key).reduce((x,a)=>x+a.qty,0);const o=data.sorties.filter(a=>a.farine===f.key).reduce((x,a)=>x+a.qty,0);const warn=s<=data.seuils[f.key];return`<div class="farine-block" style="border-color:${warn?'rgba(229,115,115,0.3)':''}"><div style="margin-bottom:6px"><span class="badge ${f.badge}">${f.label}</span></div><div class="farine-num" style="color:${warn?'var(--accent4)':f.color}">${s} sacs ${warn?'⚠️':''}</div><div class="farine-stats"><span>📥 Entré: ${e}</span><span>📤 Sorti: ${o}</span><span>Seuil: ${data.seuils[f.key]}</span></div></div>`;}).join('');}
+
+  const seuilEl=document.getElementById('seuil-blocks');
+  if(seuilEl){seuilEl.innerHTML=FARINES.map(f=>`<div class="dep-row"><span style="font-size:11px">${f.label}</span><div style="display:flex;align-items:center;gap:6px"><input type="number" value="${data.seuils[f.key]}" min="0" style="width:72px;background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:6px 8px;color:var(--text);font-size:12px;text-align:center" onchange="updateSeuil('${f.key}',this.value)" inputmode="numeric"><span style="font-size:10px;color:var(--text2)">sacs</span></div></div>`).join('');}
+
+  renderApproTable(window._approFilter||'all');
+  renderSortieTable(window._sortieFilter||'all');
+  renderDepTable(window._depFilter||'all');
+  renderVirementTable();
+  refreshDepApercu();
+}
+
+// ===== APPRO TABLE =====
+function renderApproTable(f){
+  window._approFilter=f;
+  const el=document.getElementById('appro-table');if(!el)return;
+  const rows=[...data.appros].filter(a=>f==='all'||a.farine===f).sort((a,b)=>b.date.localeCompare(a.date));
+  el.innerHTML=rows.length?rows.map(a=>`<tr><td style="font-size:10px;font-family:'JetBrains Mono',monospace">${fmtD(a.date)}</td><td><span class="badge ${FARINES.find(x=>x.key===a.farine)?.badge||''}">${a.farine}</span></td><td style="font-weight:600">${a.qty}</td><td style="font-size:10px">${a.prix?fmtM(a.prix):'—'}</td><td style="color:var(--accent3);font-size:10px">${a.prix?fmtM(a.qty*a.prix):'—'}</td><td style="color:var(--text2);font-size:10px">${a.fournisseur||'—'}</td></tr>`).join(''):'<tr><td colspan="6" class="empty">Aucun approvisionnement</td></tr>';
+}
+
+// ===== SORTIE TABLE =====
+function renderSortieTable(f){
+  window._sortieFilter=f;
+  const el=document.getElementById('sortie-table');if(!el)return;
+  const rows=[...data.sorties].filter(a=>f==='all'||a.farine===f).sort((a,b)=>b.date.localeCompare(a.date));
+  el.innerHTML=rows.length?rows.map(a=>`<tr><td style="font-size:10px;font-family:'JetBrains Mono',monospace">${fmtD(a.date)}</td><td><span class="badge ${FARINES.find(x=>x.key===a.farine)?.badge||''}">${a.farine}</span></td><td style="color:var(--accent4);font-weight:600">${a.qty}</td><td style="font-size:11px">${a.client||'—'}</td><td style="color:var(--text2);font-size:10px">${a.note||'—'}</td></tr>`).join(''):'<tr><td colspan="5" class="empty">Aucune sortie</td></tr>';
+}
+
+// ===== CLIENT BLOCKS =====
+function refreshClientBlocks(){
+  const month=document.getElementById('client-month')?.value||curMonth();
+  const el=document.getElementById('client-blocks');if(!el)return;
+  const sorties=data.sorties.filter(s=>s.date.startsWith(month));
+  const clients={};
+  sorties.forEach(s=>{
+    const c=s.client||'Anonyme';
+    if(!clients[c])clients[c]={total:0,farines:{}};
+    clients[c].total+=s.qty;
+    clients[c].farines[s.farine]=(clients[c].farines[s.farine]||0)+s.qty;
+  });
+  if(!Object.keys(clients).length){el.innerHTML='<div class="card"><div class="empty">Aucune sortie ce mois</div></div>';return;}
+  el.innerHTML=Object.entries(clients).sort((a,b)=>b[1].total-a[1].total).map(([c,v])=>`
+    <div class="card" style="margin-bottom:8px">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+        <div style="font-weight:600;font-size:13px">👤 ${c}</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:700;color:var(--accent4)">${v.total} sacs</div>
+      </div>
+      ${Object.entries(v.farines).map(([f,q])=>`<div class="dep-row"><span class="badge ${FARINES.find(x=>x.key===f)?.badge||''}" style="font-size:9px">${f}</span><span style="font-family:'JetBrains Mono',monospace;font-size:12px">${q} sacs</span></div>`).join('')}
+      <div style="text-align:right;margin-top:6px"><button class="btn btn-info btn-sm" onclick="genRapportClient('${c}','${month}')">📄 Fiche client</button></div>
+    </div>`).join('');
+}
+
+// ===== FARINE BLOCKS =====
+function refreshFarineBlocks(){
+  const month=document.getElementById('farine-month')?.value||curMonth();
+  const el=document.getElementById('farine-blocks');if(!el)return;
+  const sorties=data.sorties.filter(s=>s.date.startsWith(month));
+  el.innerHTML=FARINES.map(f=>{
+    const rows=sorties.filter(s=>s.farine===f.key);
+    const total=rows.reduce((s,r)=>s+r.qty,0);
+    return`<div class="card" style="margin-bottom:8px">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+        <span class="badge ${f.badge}">${f.label}</span>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:16px;font-weight:700;color:${f.color}">${total} sacs</span>
+      </div>
+      ${rows.length?rows.sort((a,b)=>b.date.localeCompare(a.date)).map(r=>`<div class="dep-row"><span style="font-size:10px;color:var(--text2)">${fmtD(r.date)}</span><span style="font-size:11px">${r.client||'—'}</span><span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--accent4)">${r.qty}</span></div>`).join(''):'<div class="empty" style="padding:10px">Aucune sortie</div>'}
+    </div>`;
+  }).join('');
+}
+
+// ===== DEP APERCU =====
+function refreshDepApercu(){
+  const month=document.getElementById('dep-month-filter')?.value||curMonth();
+  const vir=data.virements.filter(v=>v.date.startsWith(month)).reduce((s,v)=>s+v.montant,0);
+  const deps=data.depenses.filter(d=>d.date.startsWith(month));
+  const total=deps.reduce((s,d)=>s+d.montant,0);
+  const solde=vir-total;
+  if(document.getElementById('ap-virement'))document.getElementById('ap-virement').textContent=fmtM(vir);
+  if(document.getElementById('ap-total'))document.getElementById('ap-total').textContent=fmtM(total);
+  if(document.getElementById('ap-solde')){document.getElementById('ap-solde').textContent=fmtM(solde);document.getElementById('ap-solde').style.color=solde>=0?'var(--accent3)':'var(--accent4)';}
+  const bd=document.getElementById('ap-cat-breakdown');
+  if(bd){
+    const cats={};ALL_CATS.forEach(c=>cats[c]=0);
+    deps.forEach(d=>cats[d.cat]=(cats[d.cat]||0)+d.montant);
+    bd.innerHTML='<div class="card-title">Détail par catégorie</div>'+ALL_CATS.filter(c=>cats[c]>0).map(c=>`<div class="dep-row"><span style="font-size:11px">${CAT_ICONS[c]||'•'} ${c}</span><span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:${CAT_COLORS[c]}">${fmtM(cats[c])}</span></div>`).join('')+(ALL_CATS.every(c=>!cats[c])?'<div class="empty">Aucune dépense</div>':'');
+  }
+}
+
+// ===== MENSUEL =====
+function refreshMensuel(){
+  const month=document.getElementById('dep-mensuel-month')?.value||curMonth();
+  const el=document.getElementById('mensuel-blocks');if(!el)return;
+  const deps=data.depenses.filter(d=>d.date.startsWith(month));
+  const vir=data.virements.filter(v=>v.date.startsWith(month)).reduce((s,v)=>s+v.montant,0);
+  const cats={};ALL_CATS.forEach(c=>cats[c]=0);
+  deps.forEach(d=>cats[d.cat]=(cats[d.cat]||0)+d.montant);
+  const total=deps.reduce((s,d)=>s+d.montant,0);
+  const [y,m]=month.split('-');
+  const moisLabel=new Date(y,m-1).toLocaleDateString('fr-FR',{month:'long',year:'numeric'});
+  el.innerHTML=`
+    <div class="virement-card"><div style="font-size:10px;color:var(--accent2);margin-bottom:4px;text-transform:uppercase">Virement ${moisLabel}</div><div style="font-size:22px;font-weight:700;font-family:'JetBrains Mono',monospace;color:var(--accent2)">${fmtM(vir)}</div></div>
+    ${ALL_CATS.map(c=>cats[c]>0?`<div class="dep-row"><span style="font-size:12px">${CAT_ICONS[c]} ${c}</span><span style="font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:600;color:${CAT_COLORS[c]}">${fmtM(cats[c])}</span></div>`:'').join('')}
+    <div class="dep-row" style="border-top:2px solid var(--border);margin-top:6px"><span style="font-size:13px;font-weight:700">TOTAL DÉPENSES</span><span style="font-family:'JetBrains Mono',monospace;font-size:15px;font-weight:700;color:var(--accent4)">${fmtM(total)}</span></div>
+    <div class="dep-row"><span style="font-size:13px;font-weight:700">SOLDE RESTANT</span><span style="font-family:'JetBrains Mono',monospace;font-size:15px;font-weight:700;color:${(vir-total)>=0?'var(--accent3)':'var(--accent4)'}">${fmtM(vir-total)}</span></div>
+  `;
+}
+
+// ===== VIREMENT TABLE =====
+function renderVirementTable(){
+  const el=document.getElementById('virement-table');if(!el)return;
+  const rows=[...data.virements].sort((a,b)=>b.date.localeCompare(a.date));
+  el.innerHTML=rows.length?rows.map((v,i)=>`<tr><td style="font-size:10px;font-family:'JetBrains Mono',monospace">${fmtD(v.date)}</td><td style="font-family:'JetBrains Mono',monospace;color:var(--accent2);font-weight:600">${fmtM(v.montant)}</td><td style="color:var(--text2);font-size:10px">${v.note||'—'}</td><td><button class="btn btn-danger btn-sm" onclick="delVirement(${i})">✕</button></td></tr>`).join(''):'<tr><td colspan="4" class="empty">Aucun virement</td></tr>';
+}
+
+// ===== DEP TABLE =====
+function renderDepTable(f){
+  window._depFilter=f;
+  const el=document.getElementById('depense-table');if(!el)return;
+  const rows=[...data.depenses].filter(d=>f==='all'||d.cat===f).sort((a,b)=>b.date.localeCompare(a.date));
+  el.innerHTML=rows.length?rows.map((d,i)=>`<tr><td style="font-size:10px;font-family:'JetBrains Mono',monospace">${fmtD(d.date)}</td><td style="color:${CAT_COLORS[d.cat]};font-size:10px;font-weight:600">${CAT_ICONS[d.cat]||''} ${d.cat}</td><td style="color:var(--accent4);font-family:'JetBrains Mono',monospace;font-size:11px">${fmtM(d.montant)}</td><td style="color:var(--text2);font-size:10px">${d.desc||'—'}</td><td><button class="btn btn-danger btn-sm" onclick="delDep(${i})">✕</button></td></tr>`).join(''):'<tr><td colspan="5" class="empty">Aucune dépense</td></tr>';
+}
+function filterDep(f,btn){
+  document.querySelectorAll('#dep-tab-charges .filter-scroll .chip').forEach(c=>c.classList.remove('active'));
+  btn.classList.add('active');renderDepTable(f);
+}
+
+// ===== HIST TABLE =====
+function renderHistTable(){
+  const el=document.getElementById('hist-table');if(!el)return;
+  const filter=document.getElementById('hist-month')?.value||'';
+  const moves=[
+    ...data.appros.map(a=>({date:a.date,type:'ENTRÉE',farine:a.farine,qty:'+'+a.qty,montant:a.prix?fmtM(a.qty*a.prix):'—'})),
+    ...data.sorties.map(s=>({date:s.date,type:'SORTIE',farine:s.farine,qty:'-'+s.qty,montant:'—'})),
+    ...data.depenses.map(d=>({date:d.date,type:d.cat,farine:'—',qty:'—',montant:fmtM(d.montant)})),
+    ...data.virements.map(v=>({date:v.date,type:'VIREMENT',farine:'—',qty:'—',montant:fmtM(v.montant)}))
+  ].filter(m=>!filter||m.date.startsWith(filter)).sort((a,b)=>b.date.localeCompare(a.date));
+  el.innerHTML=moves.length?moves.map(m=>{
+    let bc='',bc2='';
+    if(m.type==='ENTRÉE'){bc='badge-in';}
+    else if(m.type==='SORTIE'){bc='badge-out';}
+    else if(m.type==='VIREMENT'){bc2='background:rgba(79,195,247,0.15);color:var(--accent2)';}
+    else{bc2=`background:rgba(245,166,35,0.1);color:var(--accent)`;}
+    return`<tr><td style="font-size:10px;font-family:'JetBrains Mono',monospace">${fmtD(m.date)}</td><td><span class="badge ${bc}" style="${bc2};font-size:9px">${m.type}</span></td><td style="font-size:10px">${m.farine}</td><td style="font-family:'JetBrains Mono',monospace;font-size:10px">${m.qty}</td><td style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--accent)">${m.montant}</td></tr>`;
+  }).join(''):'<tr><td colspan="5" class="empty">Aucune opération</td></tr>';
+}
+
+// ===== RAPPORT DEPENSES =====
+let _rapportData={};
+function genRapportDepenses(){
+  const month=document.getElementById('dep-mensuel-month')?.value||curMonth();
+  const[y,m]=month.split('-');
+  const moisLabel=new Date(y,m-1).toLocaleDateString('fr-FR',{month:'long',year:'numeric'});
+  const deps=data.depenses.filter(d=>d.date.startsWith(month));
+  const vir=data.virements.filter(v=>v.date.startsWith(month)).reduce((s,v)=>s+v.montant,0);
+  const cats={};ALL_CATS.forEach(c=>cats[c]=0);deps.forEach(d=>cats[d.cat]=(cats[d.cat]||0)+d.montant);
+  const total=deps.reduce((s,d)=>s+d.montant,0);
+  _rapportData={type:'depenses',month,moisLabel,cats,total,vir};
+  document.getElementById('rapport-title').textContent='📄 Rapport Dépenses — '+moisLabel;
+  document.getElementById('rapport-body').innerHTML=`
+    <div class="rapport-section">
+      <div class="rapport-section-title">Financement</div>
+      <div class="rapport-row"><span style="color:var(--text2)">Virement reçu</span><span style="color:var(--accent2);font-family:'JetBrains Mono',monospace;font-weight:600">${fmtM(vir)}</span></div>
+    </div>
+    <div class="rapport-section">
+      <div class="rapport-section-title">Détail des charges</div>
+      ${ALL_CATS.map(c=>cats[c]>0?`<div class="rapport-row"><span>${CAT_ICONS[c]} ${c}</span><span style="font-family:'JetBrains Mono',monospace">${fmtM(cats[c])}</span></div>`:'').join('')}
+      <div class="rapport-total"><span>Total dépenses</span><span style="color:var(--accent4)">${fmtM(total)}</span></div>
+      <div class="rapport-total"><span>Solde restant</span><span style="color:${(vir-total)>=0?'var(--accent3)':'var(--accent4)'}">${fmtM(vir-total)}</span></div>
+    </div>`;
+  openModal('rapport-modal');
+}
+
+// ===== RAPPORT CLIENT =====
+function genRapportClient(client,month){
+  const[y,m]=month.split('-');
+  const moisLabel=new Date(y,m-1).toLocaleDateString('fr-FR',{month:'long',year:'numeric'});
+  const sorties=data.sorties.filter(s=>s.date.startsWith(month)&&s.client===client);
+  const farines={};FARINES.forEach(f=>farines[f.key]=0);
+  sorties.forEach(s=>farines[s.farine]=(farines[s.farine]||0)+s.qty);
+  const total=sorties.reduce((s,r)=>s+r.qty,0);
+  _rapportData={type:'client',client,month,moisLabel,sorties,farines,total};
+  document.getElementById('rapport-title').textContent='📄 Fiche Client — '+client;
+  document.getElementById('rapport-body').innerHTML=`
+    <div class="rapport-section">
+      <div class="rapport-section-title">Client : ${client} | ${moisLabel}</div>
+      ${FARINES.filter(f=>farines[f.key]>0).map(f=>`<div class="rapport-row"><span class="badge ${f.badge}" style="font-size:10px">${f.label}</span><span style="font-family:'JetBrains Mono',monospace;font-weight:600">${farines[f.key]} sacs</span></div>`).join('')}
+      <div class="rapport-total"><span>Total enlevé</span><span>${total} sacs</span></div>
+    </div>
+    <div class="rapport-section">
+      <div class="rapport-section-title">Détail des sorties</div>
+      ${sorties.sort((a,b)=>b.date.localeCompare(a.date)).map(s=>`<div class="rapport-row"><span style="color:var(--text2);font-size:11px">${fmtD(s.date)}</span><span style="font-size:11px">${s.farine}</span><span style="font-family:'JetBrains Mono',monospace">${s.qty} sacs</span></div>`).join('')}
+    </div>`;
+  openModal('rapport-modal');
+}
+
+// ===== RAPPORT COMPLET =====
+function genRapportComplet(){
+  const month=document.getElementById('hist-month')?.value||curMonth();
+  const[y,m]=month.split('-');
+  const moisLabel=new Date(y,m-1).toLocaleDateString('fr-FR',{month:'long',year:'numeric'});
+  const deps=data.depenses.filter(d=>d.date.startsWith(month));
+  const vir=data.virements.filter(v=>v.date.startsWith(month)).reduce((s,v)=>s+v.montant,0);
+  const cats={};ALL_CATS.forEach(c=>cats[c]=0);deps.forEach(d=>cats[d.cat]=(cats[d.cat]||0)+d.montant);
+  const totalDep=deps.reduce((s,d)=>s+d.montant,0);
+  const sorties=data.sorties.filter(s=>s.date.startsWith(month));
+  const clients={};
+  sorties.forEach(s=>{const c=s.client||'Anonyme';if(!clients[c])clients[c]={total:0,farines:{}};clients[c].total+=s.qty;clients[c].farines[s.farine]=(clients[c].farines[s.farine]||0)+s.qty;});
+  const appros=data.appros.filter(a=>a.date.startsWith(month));
+  const totalEntree=appros.reduce((s,a)=>s+a.qty,0);
+  const totalSortie=sorties.reduce((s,a)=>s+a.qty,0);
+  _rapportData={type:'complet',month,moisLabel};
+  document.getElementById('rapport-title').textContent='📄 Rapport Complet — '+moisLabel;
+  document.getElementById('rapport-body').innerHTML=`
+    <div class="rapport-section">
+      <div class="rapport-section-title">📦 Mouvements de stock</div>
+      <div class="rapport-row"><span style="color:var(--text2)">Total entré (sacs)</span><span style="color:var(--accent3);font-family:'JetBrains Mono',monospace">${totalEntree}</span></div>
+      <div class="rapport-row"><span style="color:var(--text2)">Total sorti (sacs)</span><span style="color:var(--accent4);font-family:'JetBrains Mono',monospace">${totalSortie}</span></div>
+    </div>
+    <div class="rapport-section">
+      <div class="rapport-section-title">👤 Enlèvements par client</div>
+      ${Object.keys(clients).length?Object.entries(clients).sort((a,b)=>b[1].total-a[1].total).map(([c,v])=>`<div class="rapport-row"><span style="font-size:11px">${c}</span><span style="font-family:'JetBrains Mono',monospace">${v.total} sacs</span></div>`).join(''):'<div style="font-size:12px;color:var(--text3);padding:6px 0">Aucune sortie ce mois</div>'}
+    </div>
+    <div class="rapport-section">
+      <div class="rapport-section-title">💸 Dépenses</div>
+      <div class="rapport-row"><span style="color:var(--accent2)">Virement reçu</span><span style="color:var(--accent2);font-family:'JetBrains Mono',monospace">${fmtM(vir)}</span></div>
+      ${ALL_CATS.map(c=>cats[c]>0?`<div class="rapport-row"><span>${CAT_ICONS[c]} ${c}</span><span style="font-family:'JetBrains Mono',monospace">${fmtM(cats[c])}</span></div>`:'').join('')}
+      <div class="rapport-total"><span>Total dépenses</span><span style="color:var(--accent4)">${fmtM(totalDep)}</span></div>
+      <div class="rapport-total"><span>Solde</span><span style="color:${(vir-totalDep)>=0?'var(--accent3)':'var(--accent4)'}">${fmtM(vir-totalDep)}</span></div>
+    </div>`;
+  openModal('rapport-modal');
+}
+
+// ===== PRINT =====
+function printRapport(){
+  const title=document.getElementById('rapport-title').textContent;
+  const body=document.getElementById('rapport-body').innerHTML;
+  const w=window.open('','_blank');
+  w.document.write('<!DOCTYPE html><html><head><meta charset="UTF-8"><title>'+title+'</title>'+'<style>'+'body{font-family:Arial,sans-serif;padding:24px;color:#111;font-size:13px;max-width:600px;margin:0 auto}'+'h1{font-size:18px;margin-bottom:20px;padding-bottom:8px;border-bottom:2px solid #111}'+'</style></head><body>'+'<h1>'+title+'</h1>'+'<div style="font-size:11px;color:#888;margin-bottom:16px">Genere le '+new Date().toLocaleDateString('fr-FR',{day:'numeric',month:'long',year:'numeric'})+'</div>'+body+'
+<div class="modal-overlay" id="modal-new-client"><div class="modal"><div class="modal-handle"></div>
+  <div class="modal-header"><div class="modal-title">👤 Nouveau client</div><button class="modal-close" onclick="closeModal('modal-new-client')">✕</button></div>
+  <div class="form-group"><label class="form-label">Nom</label><input type="text" class="form-input" id="nc-nom" placeholder="Nom complet"></div>
+  <div class="form-group"><label class="form-label">Téléphone</label><input type="tel" class="form-input" id="nc-tel" placeholder="77 000 00 00"></div>
+  <div class="form-group"><label class="form-label">Solde initial (F CFA)</label><input type="number" class="form-input" id="nc-solde" value="0" inputmode="numeric"></div>
+  <div class="form-group"><label class="form-label">Limite de crédit (F CFA)</label><input type="number" class="form-input" id="nc-limite" value="0" inputmode="numeric"></div>
+  <button class="btn btn-primary" style="width:100%" onclick="saveNewClient()">Enregistrer</button>
+</div></div>
+
+<div class="modal-overlay" id="modal-versement-client"><div class="modal"><div class="modal-handle"></div>
+  <div class="modal-header"><div class="modal-title">💰 Versement</div><button class="modal-close" onclick="closeModal('modal-versement-client')">✕</button></div>
+  <div class="form-group"><label class="form-label">Client</label><select class="form-select" id="vc-client" onchange="previewVer()"></select></div>
+  <div id="vc-solde-now" style="font-size:12px;padding:7px 10px;background:rgba(245,166,35,0.08);border-radius:6px;margin-bottom:10px"></div>
+  <div class="grid2">
+    <div class="form-group"><label class="form-label">Montant (F CFA)</label><input type="number" class="form-input" id="vc-montant" min="0" placeholder="50000" inputmode="numeric" onchange="previewVer()"></div>
+    <div class="form-group"><label class="form-label">Date</label><input type="date" class="form-input" id="vc-date"></div>
+  </div>
+  <div class="form-group"><label class="form-label">Note</label><input type="text" class="form-input" id="vc-note" placeholder="Versement partiel..."></div>
+  <div id="vc-preview" style="text-align:center;padding:10px;background:var(--surface2);border-radius:8px;margin-bottom:10px;font-weight:600;font-size:13px"></div>
+  <button class="btn btn-primary" style="width:100%" onclick="saveVer()">Enregistrer</button>
+</div></div>
+
+<div class="modal-overlay" id="modal-enlev-client"><div class="modal"><div class="modal-handle"></div>
+  <div class="modal-header"><div class="modal-title">📤 Enlèvement</div><button class="modal-close" onclick="closeModal('modal-enlev-client')">✕</button></div>
+  <div class="form-group"><label class="form-label">Client</label><select class="form-select" id="ec-client" onchange="previewEnl()"></select></div>
+  <div id="ec-solde-now" style="font-size:12px;padding:7px 10px;background:rgba(245,166,35,0.08);border-radius:6px;margin-bottom:10px"></div>
+  <div class="form-group"><label class="form-label">Type de farine</label>
+    <select class="form-select" id="ec-farine" onchange="updateEcStock()">
+      <option value="FIRST CHOICE">FARINE FIRST CHOICE</option><option value="TERANGA">FARINE TERANGA</option>
+      <option value="PATISSIERE">FARINE PATISSIERE</option><option value="BEIGNET">FARINE BEIGNET</option>
+    </select></div>
+  <div id="ec-stock-info" style="font-size:11px;color:var(--accent);margin-bottom:8px;padding:5px 10px;background:rgba(245,166,35,0.06);border-radius:6px"></div>
+  <div class="grid2">
+    <div class="form-group"><label class="form-label">Nombre de sacs</label><input type="number" class="form-input" id="ec-qty" min="1" placeholder="10" inputmode="numeric"></div>
+    <div class="form-group"><label class="form-label">Montant (F CFA)</label><input type="number" class="form-input" id="ec-montant" min="0" placeholder="170000" inputmode="numeric" onchange="previewEnl()"></div>
+  </div>
+  <div class="form-group"><label class="form-label">Date</label><input type="date" class="form-input" id="ec-date"></div>
+  <div class="form-group"><label class="form-label">Note</label><input type="text" class="form-input" id="ec-note" placeholder="Remarque..."></div>
+  <div id="ec-preview" style="text-align:center;padding:10px;background:var(--surface2);border-radius:8px;margin-bottom:10px;font-weight:600;font-size:13px"></div>
+  <button class="btn btn-primary" style="width:100%" onclick="saveEnl()">Enregistrer</button>
+</div></div>
+
+<div class="modal-overlay" id="modal-fiche-client"><div class="modal"><div class="modal-handle"></div>
+  <div class="modal-header"><div class="modal-title" id="fiche-titre">Fiche Client</div><button class="modal-close" onclick="closeModal('modal-fiche-client')">✕</button></div>
+  <div id="fiche-body"></div>
+  <div style="display:flex;gap:8px;margin-top:12px">
+    <button class="btn btn-success" style="flex:1" onclick="printFiche()">Imprimer</button>
+    <button class="btn btn-danger btn-sm" id="btn-del-client">Supprimer</button>
+  </div>
+</div></div>
+
+
+<!-- LIMITE CREDIT ALERT MODAL -->
+<div class="modal-overlay" id="modal-limite-alert">
+  <div class="modal" style="border-top:3px solid var(--accent4)">
+    <div class="modal-handle"></div>
+    <div id="limite-alert-body"></div>
+    <div style="display:flex;gap:8px">
+      <button class="btn" style="flex:1;background:var(--surface3);color:var(--text2);border:1px solid var(--border)" onclick="closeModal('modal-limite-alert')">
+        Annuler l'enlèvement
+      </button>
+      <button class="btn btn-danger" style="flex:1" onclick="confirmLimiteAlert()">
+        Forcer quand même
+      </button>
+    </div>
+    <div style="font-size:10px;color:var(--text3);text-align:center;margin-top:8px">
+      Recommandé : annuler et demander un versement au client d'abord
+    </div>
+  </div>
+</div>
+
+</body></html>')
+  w.document.close();
+  setTimeout(()=>w.print(),500);
+}
+
+// ===== EXPORT RAPPORT CSV =====
+function exportRapportCSV(){
+  const title=document.getElementById('rapport-title').textContent.replace(/[^a-z0-9]/gi,'_');
+  const rows=[];
+  if(_rapportData.type==='depenses'){
+    rows.push(['Categorie','Montant FCFA']);
+    ALL_CATS.forEach(c=>{if(_rapportData.cats[c]>0)rows.push([c,_rapportData.cats[c]])});
+    rows.push(['TOTAL',_rapportData.total]);rows.push(['VIREMENT',_rapportData.vir]);rows.push(['SOLDE',_rapportData.vir-_rapportData.total]);
+  } else if(_rapportData.type==='client'){
+    rows.push(['Date','Farine','Quantite sacs']);
+    _rapportData.sorties.forEach(s=>rows.push([s.date,s.farine,s.qty]));
+    rows.push(['TOTAL','',_rapportData.total]);
+  } else if(_rapportData.type==='complet'){
+    rows.push(['Rapport complet',_rapportData.moisLabel]);
+  }
+  const csv=rows.map(r=>r.join(',')).join('\n');
+  const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');a.href=url;a.download=title+'.csv';a.click();
+  toast('✓ Export CSV téléchargé');
+}
+
+// ===== SAVE ACTIONS =====
+function saveAppro(){
+  const qty=parseInt(document.getElementById('a-qty').value)||0;
+  const prix=parseFloat(document.getElementById('a-prix').value)||0;
+  if(!qty){toast('⚠️ Quantité requise','w');return;}
+  data.appros.push({farine:document.getElementById('a-farine').value,qty,prix,fournisseur:document.getElementById('a-four').value,date:document.getElementById('a-date').value||today(),note:document.getElementById('a-note').value});
+  save();closeModal('modal-appro');['a-qty','a-prix','a-four','a-note'].forEach(id=>document.getElementById(id).value='');
+  toast('✓ Approvisionnement enregistré');refresh();
+}
+function saveSortie(){
+  const qty=parseInt(document.getElementById('s-qty').value)||0;
+  const farine=document.getElementById('s-farine').value;
+  if(!qty){toast('⚠️ Quantité requise','w');return;}
+  if(qty>getStock(farine)){toast('⚠️ Stock insuffisant !','w');return;}
+  data.sorties.push({farine,qty,client:document.getElementById('s-client').value,date:document.getElementById('s-date').value||today(),note:document.getElementById('s-note').value});
+  save();closeModal('modal-sortie');['s-qty','s-client','s-note'].forEach(id=>document.getElementById(id).value='');
+  toast('✓ Sortie enregistrée');refresh();
+}
+function saveDepense(){
+  const montant=parseFloat(document.getElementById('dep-montant').value)||0;
+  if(!montant){toast('⚠️ Montant requis','w');return;}
+  data.depenses.push({cat:document.getElementById('dep-cat').value,montant,desc:document.getElementById('dep-desc').value,date:document.getElementById('dep-date').value||today()});
+  save();closeModal('modal-depense');['dep-montant','dep-desc'].forEach(id=>document.getElementById(id).value='');
+  toast('✓ Dépense enregistrée');refresh();
+}
+function saveVirement(){
+  const montant=parseFloat(document.getElementById('vir-montant').value)||0;
+  if(!montant){toast('⚠️ Montant requis','w');return;}
+  data.virements.push({montant,date:document.getElementById('vir-date').value||today(),note:document.getElementById('vir-note').value});
+  save();closeModal('modal-virement');['vir-montant','vir-note'].forEach(id=>document.getElementById(id).value='');
+  toast('✓ Virement enregistré');refresh();
+}
+function delDep(i){if(!confirm('Supprimer ?'))return;data.depenses.splice(i,1);save();refresh();toast('Supprimé');}
+function delVirement(i){if(!confirm('Supprimer ce virement ?'))return;data.virements.splice(i,1);save();refresh();toast('Supprimé');}
+function updateSeuil(key,val){data.seuils[key]=parseInt(val)||0;save();}
+function updateStockInfo(){const f=document.getElementById('s-farine').value;document.getElementById('s-stock-info').textContent='Stock disponible : '+getStock(f)+' sacs';}
+
+// ===== FILTERS =====
+function filterT(type,filter,btn){
+  const pageId=type==='appro'?'page-appro':'sortie-tab-liste';
+  document.querySelectorAll('#'+pageId+' .filter-scroll .chip').forEach(c=>c.classList.remove('active'));
+  btn.classList.add('active');
+  if(type==='appro')renderApproTable(filter);else renderSortieTable(filter);
+}
+
+// ===== EXPORT CSV =====
+function exportCSV(){
+  const filter=document.getElementById('hist-month')?.value||'';
+  const rows=[
+    ...data.appros.map(a=>({date:a.date,type:'ENTREE',farine:a.farine,qty:a.qty,montant:a.qty*(a.prix||0),info:a.fournisseur||''})),
+    ...data.sorties.map(s=>({date:s.date,type:'SORTIE',farine:s.farine,qty:s.qty,montant:0,info:s.client||''})),
+    ...data.depenses.map(d=>({date:d.date,type:d.cat,farine:'',qty:'',montant:d.montant,info:d.desc||''})),
+    ...data.virements.map(v=>({date:v.date,type:'VIREMENT',farine:'',qty:'',montant:v.montant,info:v.note||''}))
+  ].filter(r=>!filter||r.date.startsWith(filter)).sort((a,b)=>b.date.localeCompare(a.date));
+  const csv=['Date,Type,Farine,Quantite,Montant FCFA,Info',...rows.map(r=>`${r.date},${r.type},${r.farine},${r.qty},${r.montant},"${r.info}"`)].join('\n');
+  const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');a.href=url;a.download='depot_farine_'+(filter||'complet')+'.csv';a.click();
+  toast('✓ Export téléchargé');
+}
+
+// ===== MODAL =====
+function openModal(id){
+  document.getElementById(id).classList.add('open');
+  if(id==='modal-sortie')updateStockInfo();
+}
+function closeModal(id){document.getElementById(id).classList.remove('open')}
+document.querySelectorAll('.modal-overlay').forEach(o=>o.addEventListener('click',e=>{if(e.target===o)o.classList.remove('open')}));
+
+// ===== TOAST =====
+let toastTimer;
+function toast(msg,type){
+  let el=document.querySelector('.toast');if(el)el.remove();clearTimeout(toastTimer);
+  el=document.createElement('div');el.className='toast';
+  el.style.borderLeftColor=type==='w'?'var(--accent4)':'var(--accent3)';
+  el.textContent=msg;document.body.appendChild(el);
+  toastTimer=setTimeout(()=>el.remove(),3000);
+}
+
+// ===== INIT =====
+const _d=new Date();
+document.getElementById('headerDate').textContent=_d.toLocaleDateString('fr-FR',{weekday:'short',year:'numeric',month:'short',day:'numeric'});
+document.querySelectorAll('input[type=date]').forEach(i=>i.value=today());
+const hm=document.getElementById('hist-month');
+if(hm){hm.value=curMonth();hm.addEventListener('change',renderHistTable);}
+const dm=document.getElementById('dep-month-filter');if(dm)dm.value=curMonth();
+const mm=document.getElementById('dep-mensuel-month');if(mm)mm.value=curMonth();
+const cm2=document.getElementById('client-month');if(cm2){cm2.value=curMonth();cm2.addEventListener('change',refreshClientBlocks);}
+const fm=document.getElementById('farine-month');if(fm){fm.value=curMonth();fm.addEventListener('change',refreshFarineBlocks);}
+refresh();
+
+function getSoldeClient(cid){var c=data.clients.find(function(x){return x.id===cid;});if(!c)return 0;var init=c.soldeInitial||0;var enl=data.sorties.filter(function(s){return s.clientId===cid;}).reduce(function(s,r){return s+(r.montant||0);},0);var ver=data.versements_clients.filter(function(v){return v.clientId===cid;}).reduce(function(s,v){return s+v.montant;},0);return init+enl-ver;}
+function switchCTab(tab,btn){['liste','versements'].forEach(function(t){document.getElementById('ctab-'+t).style.display='none';});document.getElementById('ctab-'+tab).style.display='block';document.querySelectorAll('#page-clients .tab-btn').forEach(function(b){b.classList.remove('active');});btn.classList.add('active');if(tab==='versements')renderVTable();if(tab==='liste')renderClients('all');}
+function filterC(f,btn){document.querySelectorAll('#cf-chips .chip').forEach(function(c){c.classList.remove('active');});btn.classList.add('active');renderClients(f);}
+function renderClients(filter){var el=document.getElementById('clients-list');if(!el)return;if(!data.clients||!data.clients.length){el.innerHTML='<div class="card"><div class="empty">Aucun client enregistre.</div></div>';return;}var list=data.clients.slice().sort(function(a,b){return a.nom.localeCompare(b.nom);});if(filter==='debiteur')list=list.filter(function(c){return getSoldeClient(c.id)>0;});if(filter==='ok')list=list.filter(function(c){return getSoldeClient(c.id)<=0;});if(filter==='limite')list=list.filter(function(c){return c.limiteCredit>0&&getSoldeClient(c.id)>c.limiteCredit;});var h=list.map(function(c){var solde=getSoldeClient(c.id);var isD=solde>0;var over=c.limiteCredit>0&&solde>c.limiteCredit;var ops=data.sorties.filter(function(s){return s.clientId===c.id;}).concat(data.versements_clients.filter(function(v){return v.clientId===c.id;})).sort(function(a,b){return b.date.localeCompare(a.date);});var last=ops.length?fmtD(ops[0].date):'—';return '<div class="card" style="margin-bottom:8px;border-color:'+(over?'rgba(229,115,115,0.5)':isD?'rgba(229,115,115,0.2)':'rgba(129,199,132,0.2)')+'">'+'<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px">'+'<div><div style="font-weight:700;font-size:14px">'+c.nom+'</div>'+(c.tel?'<div style="font-size:11px;color:var(--text2)">'+c.tel+'</div>':'')+'<div style="font-size:10px;color:var(--text3)">Dern: '+last+'</div>'+(over?'<div style="font-size:10px;color:var(--accent4);font-weight:700">Limite depassee!</div>':'')+'</div>'+'<div style="text-align:right"><div style="font-size:10px;color:var(--text2)">'+(isD?'DOIT':'CREDIT')+'</div><div style="font-family:\'JetBrains Mono\',monospace;font-size:20px;font-weight:700;color:'+(isD?'var(--accent4)':'var(--accent3)')+'">'+fmtM(Math.abs(solde))+'</div>'+(c.limiteCredit>0?'<div style="font-size:10px;color:var(--text3)">Lim: '+fmtM(c.limiteCredit)+'</div>':'')+'</div></div>'+'<div style="display:flex;gap:6px"><button class="btn btn-success btn-sm" style="flex:1" onclick="openModalVer(\''+c.id+'\')">Versement</button><button class="btn btn-primary btn-sm" style="flex:1" onclick="openModalEnl(\''+c.id+'\')">Enlevement</button><button class="btn btn-sm" style="background:var(--surface3);color:var(--text2);border:1px solid var(--border)" onclick="openFiche(\''+c.id+'\')">Fiche</button></div></div>';}).join('');el.innerHTML=h||'<div class="card"><div class="empty">Aucun resultat</div></div>';}
+function fillSel(sid,selected){var sel=document.getElementById(sid);if(!sel)return;var sorted=data.clients.slice().sort(function(a,b){return a.nom.localeCompare(b.nom);});sel.innerHTML=sorted.map(function(c){return '<option value="'+c.id+'"'+(c.id===selected?' selected':'')+'>'+c.nom+'</option>';}).join('');}
+function openModalVer(cid){fillSel('vc-client',cid);document.getElementById('vc-date').value=today();document.getElementById('vc-montant').value='';document.getElementById('vc-note').value='';previewVer();openModal('modal-versement-client');}
+function openModalEnl(cid){fillSel('ec-client',cid);document.getElementById('ec-date').value=today();document.getElementById('ec-qty').value='';document.getElementById('ec-montant').value='';document.getElementById('ec-note').value='';updateEcStock();previewEnl();openModal('modal-enlev-client');}
+function previewVer(){var cid=document.getElementById('vc-client')&&document.getElementById('vc-client').value;var m=parseFloat(document.getElementById('vc-montant')&&document.getElementById('vc-montant').value)||0;var s=getSoldeClient(cid);var e1=document.getElementById('vc-solde-now');var e2=document.getElementById('vc-preview');if(e1)e1.textContent='Solde actuel: '+fmtM(s)+(s>0?' (debiteur)':' (solde)');if(e2&&m>0){var a=s-m;e2.textContent='Solde apres versement: '+fmtM(Math.abs(a))+(a>0?' - reste a payer':a<0?' - credit':' SOLDE!');e2.style.color=a<=0?'var(--accent3)':'var(--accent4)';}else if(e2)e2.textContent='';}
+function previewEnl(){
+  var cid=document.getElementById('ec-client')&&document.getElementById('ec-client').value;
+  var m=parseFloat(document.getElementById('ec-montant')&&document.getElementById('ec-montant').value)||0;
+  var s=getSoldeClient(cid);
+  var c=data.clients.find(function(x){return x.id===cid;});
+  var e2=document.getElementById('ec-preview');
+  if(e2&&m>0){
+    var a=s+m;
+    var over=c&&c.limiteCredit>0&&a>c.limiteCredit;
+    var restantAvant=c&&c.limiteCredit>0?c.limiteCredit-s:null;
+    if(over){
+      var depasse=a-c.limiteCredit;
+      e2.innerHTML='<div style="color:var(--accent4)">Solde apres: '+fmtM(a)+'</div>'
+        +'<div style="color:var(--accent4);font-size:11px;margin-top:2px">LIMITE DEPASSEE DE '+fmtM(depasse)+'</div>';
+      e2.style.background='rgba(229,115,115,0.1)';
+      e2.style.border='1px solid rgba(229,115,115,0.3)';
+    } else {
+      var reste=c&&c.limiteCredit>0?c.limiteCredit-a:null;
+      e2.innerHTML='<div style="color:var(--accent)">Solde apres: '+fmtM(a)+'</div>'
+        +(reste!==null?'<div style="color:var(--accent3);font-size:11px;margin-top:2px">Reste '+fmtM(reste)+' de credit disponible</div>':'');
+      e2.style.background='';
+      e2.style.border='';
+    }
+  } else if(e2){e2.innerHTML='';e2.style.background='';e2.style.border='';}
+}
+function updateEcStock(){var f=document.getElementById('ec-farine')&&document.getElementById('ec-farine').value;if(f){var el=document.getElementById('ec-stock-info');if(el)el.textContent='Stock disponible: '+getStock(f)+' sacs';}}
+function saveNewClient(){var nom=(document.getElementById('nc-nom').value||'').trim();if(!nom){toast('Nom requis','w');return;}if(data.clients.find(function(c){return c.nom.toLowerCase()===nom.toLowerCase();})){toast('Client deja existant','w');return;}var id='c_'+Date.now();data.clients.push({id:id,nom:nom,tel:document.getElementById('nc-tel').value.trim(),soldeInitial:parseFloat(document.getElementById('nc-solde').value)||0,limiteCredit:parseFloat(document.getElementById('nc-limite').value)||0,note:'',dateCreation:today()});save();closeModal('modal-new-client');['nc-nom','nc-tel'].forEach(function(i){document.getElementById(i).value='';});document.getElementById('nc-solde').value='0';document.getElementById('nc-limite').value='0';toast('Client ajoute');refresh();}
+function saveVer(){var cid=document.getElementById('vc-client').value;var m=parseFloat(document.getElementById('vc-montant').value)||0;if(!m){toast('Montant requis','w');return;}data.versements_clients.push({clientId:cid,montant:m,note:document.getElementById('vc-note').value,date:document.getElementById('vc-date').value||today()});save();closeModal('modal-versement-client');toast('Versement enregistre');refresh();}
+function saveEnl(){
+  var cid=document.getElementById('ec-client').value;
+  var farine=document.getElementById('ec-farine').value;
+  var qty=parseInt(document.getElementById('ec-qty').value)||0;
+  var m=parseFloat(document.getElementById('ec-montant').value)||0;
+  if(!qty){toast('Quantite requise','w');return;}
+  if(!m){toast('Montant requis','w');return;}
+  if(qty>getStock(farine)){toast('Stock insuffisant!','w');return;}
+  var cl=data.clients.find(function(c){return c.id===cid;});
+  // CHECK CREDIT LIMIT
+  if(cl&&cl.limiteCredit>0){
+    var soldeActuel=getSoldeClient(cid);
+    var soldeApres=soldeActuel+m;
+    if(soldeApres>cl.limiteCredit){
+      // BLOCK - show alert modal
+      showLimiteAlert(cl,soldeActuel,m,soldeApres,function(){
+        // user confirmed to proceed anyway
+        _doSaveEnl(cid,farine,qty,m,cl);
+      });
+      return;
+    }
+  }
+  _doSaveEnl(cid,farine,qty,m,cl);
+}
+
+function _doSaveEnl(cid,farine,qty,m,cl){
+  data.sorties.push({farine:farine,qty:qty,montant:m,clientId:cid,client:cl?cl.nom:'',date:document.getElementById('ec-date').value||today(),note:document.getElementById('ec-note').value});
+  save();closeModal('modal-enlev-client');
+  // Check if now over limit and show warning
+  var cl2=data.clients.find(function(c){return c.id===cid;});
+  if(cl2&&cl2.limiteCredit>0){
+    var newSolde=getSoldeClient(cid);
+    if(newSolde>cl2.limiteCredit){
+      showLimiteWarning(cl2,newSolde);
+    }
+  }
+  toast('Enlevement enregistre');
+  refresh();
+}
+
+function showLimiteAlert(client,soldeActuel,montantEnl,soldeApres,onConfirm){
+  var depasse=soldeApres-client.limiteCredit;
+  var el=document.getElementById('limite-alert-body');
+  if(el){
+    el.innerHTML=
+      '<div style="text-align:center;margin-bottom:16px">'
+      +'<div style="font-size:40px;margin-bottom:8px">🚨</div>'
+      +'<div style="font-size:16px;font-weight:700;color:var(--accent4);margin-bottom:4px">LIMITE DE CREDIT DEPASSEE</div>'
+      +'<div style="font-size:13px;color:var(--text2)">'+client.nom+'</div>'
+      +'</div>'
+      +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px">'
+      +'<div style="background:var(--surface2);border-radius:8px;padding:10px;text-align:center"><div style="font-size:9px;color:var(--text2);margin-bottom:4px">SOLDE ACTUEL</div><div style="font-size:14px;font-weight:700;font-family:'JetBrains Mono',monospace;color:var(--accent4)">'+fmtM(soldeActuel)+'</div></div>'
+      +'<div style="background:var(--surface2);border-radius:8px;padding:10px;text-align:center"><div style="font-size:9px;color:var(--accent2);margin-bottom:4px">LIMITE CREDIT</div><div style="font-size:14px;font-weight:700;font-family:'JetBrains Mono',monospace;color:var(--accent2)">'+fmtM(client.limiteCredit)+'</div></div>'
+      +'<div style="background:var(--surface2);border-radius:8px;padding:10px;text-align:center"><div style="font-size:9px;color:var(--accent);margin-bottom:4px">CET ENLEVEMENT</div><div style="font-size:14px;font-weight:700;font-family:'JetBrains Mono',monospace;color:var(--accent)">+'+fmtM(montantEnl)+'</div></div>'
+      +'<div style="background:rgba(229,115,115,0.15);border-radius:8px;padding:10px;text-align:center;border:1px solid rgba(229,115,115,0.3)"><div style="font-size:9px;color:var(--accent4);margin-bottom:4px">SOLDE APRES</div><div style="font-size:14px;font-weight:700;font-family:'JetBrains Mono',monospace;color:var(--accent4)">'+fmtM(soldeApres)+'</div></div>'
+      +'</div>'
+      +'<div style="background:rgba(229,115,115,0.1);border:1px solid rgba(229,115,115,0.3);border-radius:8px;padding:12px;text-align:center;margin-bottom:16px">'
+      +'<div style="font-size:12px;color:var(--accent4);font-weight:600">Depassement de '+fmtM(depasse)+'</div>'
+      +'<div style="font-size:11px;color:var(--text2);margin-top:4px">Ce client depasse sa limite de credit autorisee.</div>'
+      +'</div>';
+    window._limiteAlertConfirm=onConfirm;
+    openModal('modal-limite-alert');
+  }
+}
+
+function showLimiteWarning(client,newSolde){
+  var depasse=newSolde-client.limiteCredit;
+  // Show a persistent warning toast
+  var el=document.querySelector('.toast');if(el)el.remove();
+  var t=document.createElement('div');
+  t.className='toast';
+  t.style.cssText='position:fixed;bottom:74px;left:50%;transform:translateX(-50%);background:rgba(229,115,115,0.15);border:1px solid var(--accent4);border-left:3px solid var(--accent4);border-radius:10px;padding:12px 16px;font-size:12px;z-index:300;animation:toastIn .3s ease;white-space:normal;max-width:300px;text-align:center;color:var(--accent4)';
+  t.innerHTML='<strong>Limite depassee!</strong><br>'+client.nom+' depasse sa limite de '+fmtM(depasse);
+  document.body.appendChild(t);
+  setTimeout(function(){t.remove();},6000);
+}
+
+function confirmLimiteAlert(){
+  closeModal('modal-limite-alert');
+  if(window._limiteAlertConfirm) window._limiteAlertConfirm();
+}
+function renderVTable(){var el=document.getElementById('vtable');if(!el)return;var rows=data.versements_clients.slice().sort(function(a,b){return b.date.localeCompare(a.date);});el.innerHTML=rows.length?rows.map(function(v,i){var c=data.clients.find(function(x){return x.id===v.clientId;});return '<tr><td style="font-size:10px;font-family:\'JetBrains Mono\',monospace">'+fmtD(v.date)+'</td><td style="font-weight:600;font-size:11px">'+(c?c.nom:'?')+'</td><td style="color:var(--accent3);font-family:\'JetBrains Mono\',monospace">'+fmtM(v.montant)+'</td><td style="color:var(--text2);font-size:10px">'+(v.note||'—')+'</td><td><button class="btn btn-danger btn-sm" onclick="delVer('+i+')">x</button></td></tr>';}).join(''):'<tr><td colspan="5" class="empty">Aucun versement</td></tr>';}
+function delVer(i){if(!confirm('Supprimer?'))return;data.versements_clients.splice(i,1);save();refresh();toast('Supprime');}
+function openFiche(cid){var c=data.clients.find(function(x){return x.id===cid;});if(!c)return;var solde=getSoldeClient(cid);var isD=solde>0;var enls=data.sorties.filter(function(s){return s.clientId===cid;}).sort(function(a,b){return b.date.localeCompare(a.date);});var vers=data.versements_clients.filter(function(v){return v.clientId===cid;}).sort(function(a,b){return b.date.localeCompare(a.date);});var totalEnl=enls.reduce(function(s,r){return s+(r.montant||0);},0);var totalVer=vers.reduce(function(s,v){return s+v.montant;},0);var over=c.limiteCredit>0&&solde>c.limiteCredit;document.getElementById('fiche-titre').textContent='Fiche: '+c.nom;document.getElementById('btn-del-client').setAttribute('onclick','delClient("'+cid+'")');window._ficheCid=cid;var h='<div style="background:'+(isD?'rgba(229,115,115,0.1)':'rgba(129,199,132,0.1)')+';border-radius:10px;padding:14px;text-align:center;margin-bottom:12px"><div style="font-size:10px;color:var(--text2);margin-bottom:4px">SOLDE ACTUEL</div><div style="font-size:30px;font-weight:700;font-family:\'JetBrains Mono\',monospace;color:'+(isD?'var(--accent4)':'var(--accent3)')+'">'+fmtM(Math.abs(solde))+'</div><div style="font-size:11px;color:'+(isD?'var(--accent4)':'var(--accent3)')+'">'+( isD?'DEBITEUR':'SOLDE')+'</div>'+(over?'<div style="font-size:12px;color:var(--accent4);font-weight:700;margin-top:4px">LIMITE CREDIT DEPASSEE</div>':'')+'</div>';h+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px"><div style="background:var(--surface2);border-radius:8px;padding:8px;text-align:center"><div style="font-size:9px;color:var(--text2)">SOLDE INIT.</div><div style="font-size:12px;font-weight:700;font-family:\'JetBrains Mono\',monospace">'+fmtM(c.soldeInitial||0)+'</div></div><div style="background:var(--surface2);border-radius:8px;padding:8px;text-align:center"><div style="font-size:9px;color:var(--accent2)">LIMITE CREDIT</div><div style="font-size:12px;font-weight:700;font-family:\'JetBrains Mono\',monospace;color:var(--accent2)">'+fmtM(c.limiteCredit||0)+'</div></div><div style="background:var(--surface2);border-radius:8px;padding:8px;text-align:center"><div style="font-size:9px;color:var(--accent4)">ENLEVEMENTS</div><div style="font-size:12px;font-weight:700;font-family:\'JetBrains Mono\',monospace;color:var(--accent4)">'+fmtM(totalEnl)+'</div></div><div style="background:var(--surface2);border-radius:8px;padding:8px;text-align:center"><div style="font-size:9px;color:var(--accent3)">VERSEMENTS</div><div style="font-size:12px;font-weight:700;font-family:\'JetBrains Mono\',monospace;color:var(--accent3)">'+fmtM(totalVer)+'</div></div></div>';var allOps=enls.map(function(e){return{date:e.date,type:'ENL',label:e.farine+' x'+e.qty,montant:e.montant||0};}).concat(vers.map(function(v){return{date:v.date,type:'VER',label:v.note||'Versement',montant:v.montant};})).sort(function(a,b){return b.date.localeCompare(a.date);}).slice(0,20);if(allOps.length){h+='<div style="font-size:10px;color:var(--text2);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px">Historique</div>';h+=allOps.map(function(op){return '<div class="dep-row"><div><span class="badge '+(op.type==='VER'?'badge-in':'badge-out')+'">'+op.type+'</span> <span style="font-size:11px">'+op.label+'</span><div style="font-size:10px;color:var(--text3)">'+fmtD(op.date)+'</div></div><span style="font-family:\'JetBrains Mono\',monospace;font-size:12px;font-weight:600;color:'+(op.type==='VER'?'var(--accent3)':'var(--accent4)')+'">'+fmtM(op.montant)+'</span></div>';}).join('');}document.getElementById('fiche-body').innerHTML=h;openModal('modal-fiche-client');}
+function printFiche(){var cid=window._ficheCid;var c=data.clients.find(function(x){return x.id===cid;});if(!c)return;var body=document.getElementById('fiche-body').innerHTML;var w=window.open('','_blank');var css='body{font-family:Arial,sans-serif;padding:24px;color:#111;font-size:13px;max-width:600px;margin:0 auto}h2{font-size:16px}.dep-row{display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid #eee;font-size:12px}.badge{font-size:10px;padding:2px 6px;border-radius:10px;background:#eee}@media print{button{display:none}}';w.document.write('<!DOCTYPE html><html><head><meta charset="UTF-8"><title>'+c.nom+'</title><style>'+css+'</style></head><body><h2>DEPOT DAKAR 3 - Fiche Client</h2><h3>'+c.nom+'</h3><p style="font-size:11px;color:#888">Genere le '+new Date().toLocaleDateString('fr-FR')+'</p>'+body+'
+<!-- LIMITE CREDIT ALERT MODAL -->
+<div class="modal-overlay" id="modal-limite-alert">
+  <div class="modal" style="border-top:3px solid var(--accent4)">
+    <div class="modal-handle"></div>
+    <div id="limite-alert-body"></div>
+    <div style="display:flex;gap:8px">
+      <button class="btn" style="flex:1;background:var(--surface3);color:var(--text2);border:1px solid var(--border)" onclick="closeModal('modal-limite-alert')">
+        Annuler l'enlèvement
+      </button>
+      <button class="btn btn-danger" style="flex:1" onclick="confirmLimiteAlert()">
+        Forcer quand même
+      </button>
+    </div>
+    <div style="font-size:10px;color:var(--text3);text-align:center;margin-top:8px">
+      Recommandé : annuler et demander un versement au client d'abord
+    </div>
+  </div>
+</div>
+
+</body></html>');w.document.close();setTimeout(function(){w.print();},500);}
+function delClient(cid){if(!confirm('Supprimer ce client?'))return;data.clients=data.clients.filter(function(c){return c.id!==cid;});data.sorties=data.sorties.filter(function(s){return s.clientId!==cid;});data.versements_clients=data.versements_clients.filter(function(v){return v.clientId!==cid;});save();closeModal('modal-fiche-client');refresh();toast('Supprime');}
+
+</script>
+
+<div class="modal-overlay" id="modal-new-client"><div class="modal"><div class="modal-handle"></div>
+  <div class="modal-header"><div class="modal-title">👤 Nouveau client</div><button class="modal-close" onclick="closeModal('modal-new-client')">✕</button></div>
+  <div class="form-group"><label class="form-label">Nom</label><input type="text" class="form-input" id="nc-nom" placeholder="Nom complet"></div>
+  <div class="form-group"><label class="form-label">Téléphone</label><input type="tel" class="form-input" id="nc-tel" placeholder="77 000 00 00"></div>
+  <div class="form-group"><label class="form-label">Solde initial (F CFA)</label><input type="number" class="form-input" id="nc-solde" value="0" inputmode="numeric"></div>
+  <div class="form-group"><label class="form-label">Limite de crédit (F CFA)</label><input type="number" class="form-input" id="nc-limite" value="0" inputmode="numeric"></div>
+  <button class="btn btn-primary" style="width:100%" onclick="saveNewClient()">Enregistrer</button>
+</div></div>
+
+<div class="modal-overlay" id="modal-versement-client"><div class="modal"><div class="modal-handle"></div>
+  <div class="modal-header"><div class="modal-title">💰 Versement</div><button class="modal-close" onclick="closeModal('modal-versement-client')">✕</button></div>
+  <div class="form-group"><label class="form-label">Client</label><select class="form-select" id="vc-client" onchange="previewVer()"></select></div>
+  <div id="vc-solde-now" style="font-size:12px;padding:7px 10px;background:rgba(245,166,35,0.08);border-radius:6px;margin-bottom:10px"></div>
+  <div class="grid2">
+    <div class="form-group"><label class="form-label">Montant (F CFA)</label><input type="number" class="form-input" id="vc-montant" min="0" placeholder="50000" inputmode="numeric" onchange="previewVer()"></div>
+    <div class="form-group"><label class="form-label">Date</label><input type="date" class="form-input" id="vc-date"></div>
+  </div>
+  <div class="form-group"><label class="form-label">Note</label><input type="text" class="form-input" id="vc-note" placeholder="Versement partiel..."></div>
+  <div id="vc-preview" style="text-align:center;padding:10px;background:var(--surface2);border-radius:8px;margin-bottom:10px;font-weight:600;font-size:13px"></div>
+  <button class="btn btn-primary" style="width:100%" onclick="saveVer()">Enregistrer</button>
+</div></div>
+
+<div class="modal-overlay" id="modal-enlev-client"><div class="modal"><div class="modal-handle"></div>
+  <div class="modal-header"><div class="modal-title">📤 Enlèvement</div><button class="modal-close" onclick="closeModal('modal-enlev-client')">✕</button></div>
+  <div class="form-group"><label class="form-label">Client</label><select class="form-select" id="ec-client" onchange="previewEnl()"></select></div>
+  <div id="ec-solde-now" style="font-size:12px;padding:7px 10px;background:rgba(245,166,35,0.08);border-radius:6px;margin-bottom:10px"></div>
+  <div class="form-group"><label class="form-label">Type de farine</label>
+    <select class="form-select" id="ec-farine" onchange="updateEcStock()">
+      <option value="FIRST CHOICE">FARINE FIRST CHOICE</option><option value="TERANGA">FARINE TERANGA</option>
+      <option value="PATISSIERE">FARINE PATISSIERE</option><option value="BEIGNET">FARINE BEIGNET</option>
+    </select></div>
+  <div id="ec-stock-info" style="font-size:11px;color:var(--accent);margin-bottom:8px;padding:5px 10px;background:rgba(245,166,35,0.06);border-radius:6px"></div>
+  <div class="grid2">
+    <div class="form-group"><label class="form-label">Nombre de sacs</label><input type="number" class="form-input" id="ec-qty" min="1" placeholder="10" inputmode="numeric"></div>
+    <div class="form-group"><label class="form-label">Montant (F CFA)</label><input type="number" class="form-input" id="ec-montant" min="0" placeholder="170000" inputmode="numeric" onchange="previewEnl()"></div>
+  </div>
+  <div class="form-group"><label class="form-label">Date</label><input type="date" class="form-input" id="ec-date"></div>
+  <div class="form-group"><label class="form-label">Note</label><input type="text" class="form-input" id="ec-note" placeholder="Remarque..."></div>
+  <div id="ec-preview" style="text-align:center;padding:10px;background:var(--surface2);border-radius:8px;margin-bottom:10px;font-weight:600;font-size:13px"></div>
+  <button class="btn btn-primary" style="width:100%" onclick="saveEnl()">Enregistrer</button>
+</div></div>
+
+<div class="modal-overlay" id="modal-fiche-client"><div class="modal"><div class="modal-handle"></div>
+  <div class="modal-header"><div class="modal-title" id="fiche-titre">Fiche Client</div><button class="modal-close" onclick="closeModal('modal-fiche-client')">✕</button></div>
+  <div id="fiche-body"></div>
+  <div style="display:flex;gap:8px;margin-top:12px">
+    <button class="btn btn-success" style="flex:1" onclick="printFiche()">Imprimer</button>
+    <button class="btn btn-danger btn-sm" id="btn-del-client">Supprimer</button>
+  </div>
+</div></div>
+
+
+<!-- LIMITE CREDIT ALERT MODAL -->
+<div class="modal-overlay" id="modal-limite-alert">
+  <div class="modal" style="border-top:3px solid var(--accent4)">
+    <div class="modal-handle"></div>
+    <div id="limite-alert-body"></div>
+    <div style="display:flex;gap:8px">
+      <button class="btn" style="flex:1;background:var(--surface3);color:var(--text2);border:1px solid var(--border)" onclick="closeModal('modal-limite-alert')">
+        Annuler l'enlèvement
+      </button>
+      <button class="btn btn-danger" style="flex:1" onclick="confirmLimiteAlert()">
+        Forcer quand même
+      </button>
+    </div>
+    <div style="font-size:10px;color:var(--text3);text-align:center;margin-top:8px">
+      Recommandé : annuler et demander un versement au client d'abord
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
